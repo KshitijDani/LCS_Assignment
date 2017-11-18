@@ -2,8 +2,10 @@
 
 
 char board[]={' ',' ',' ',' ',' ',' ',' ',' ',' '};
-int O1[]={0,1,7,9,3,0,3,9,7,3};
-int O2[][2]={0,0,0,0,9,7,0,0,9,3,7,3};
+
+int O1[]={0,1,7,9,3,0,3,9,7,3}; // Positions Player1 should play after Player2's first move
+
+int O2[][2]={0,0,0,0,9,7,0,0,9,3,7,3};// Positions Player1 should play after Player2's second move
 
 
 int check(int i, int j){
@@ -68,7 +70,8 @@ void displayBoard(){
 
 int main(){
 
-	std::cout<<"Hello there. Computer player1 and mark is 'X'. You are player2 and mark is 'O'.\n\n";
+	std::cout<<"Hello there. Computer Player1 and Mark is 'X'. You are Player2 and Mark is 'O'.\n\n";
+
 	displayBoard();
 	std::cout<<"\n\n";
 	bool play=true;
@@ -79,36 +82,51 @@ int main(){
 		
 		std::cout<<"\n\nPlayer1 has put his mark in position "<<O1[pos2]<<"\n\n";	
 		moves++;
-		//std::cout<<"number of moves played = "<<moves<<"\n";
+		
 		/**/displayBoard();
 
 		L1:
 		std::cout<<"\nEnter position number where you wish to place mark(1-9)\n";
 		std::cin>>pos2;
+
+
+		// IF PLAYER2'S FIRST MOVE IS IN THE CENTER THEN GOTO L1
 		if(moves==1 && pos2==5){
-			std::cout<<"\nRule says you can't put mark in the middle on first move";
+			std::cout<<"\n\n\nRule says you can't put mark in the middle on first move";
 			goto L1;
 		}
 		
-		board[pos2-1]='O';
-		moves++;
+		if(board[pos2-1]=='X' || board[pos2-1]=='O'){
+			std::cout<<"\nThis cell is already occupied. Place somewhere else\n";
+			goto L1;
+		}
+		else{
+			board[pos2-1]='O';
+			moves++;
+		}
+
+
 		/**/displayBoard();
 		
+
+		//CHECKING TO SEE IF A WINNING COMBINATION HAS BEEN ESTABLISHED
 		if(winCheck()!=0){
-			std::cout<<"\nplayer1 wins by putting X at position "<<winCheck()<<"\n";
-			board[winCheck()-1]='X';
+			std::cout<<"\nPlayer1 wins by putting X at position "<<winCheck()<<"\n";
+			board[winCheck()-1]='X'; //Putting X to show player2 the winning combination
 			/**/displayBoard();
 			play=false;
 		}
+		
 
+		//PLAYER1'S SECOND MOVE CORRESPONDING TO PLAYER2'S FIRST MOVE
 		if(moves==2){
 			board[O1[pos2]-1]='X';
 		}
 
-		//FOLLOWING BLOCK OF CODE MUST BE TESTED		
-		
-		else if(moves==4){
-			if((board[1]=='O'&&board[3]=='O')||(board[2]=='O'&&board[4]=='O')){                   //checking cases 1 and 3. 
+				
+		//PLAYER1'S THIRD MOVE CORRESPONDING TO PLAYER2'S SECOND MOVE
+		if(moves==4){
+			if((board[1]=='O'&&board[3]=='O')||(board[2]=='O'&&board[4]=='O')){                   
 				board[O2[pos2][0]-1]='X';
 				
 			}
@@ -118,8 +136,7 @@ int main(){
 			}
 		}
 
-		pos1=pos2;
-		//STOP TESTING
+	
 			
 		
 		
