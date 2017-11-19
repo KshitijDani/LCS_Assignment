@@ -144,7 +144,7 @@ int main(){
 		
 		
 	}while(play==true);
-
+	goto L5;
 
 	//CASE WHEN PLAYER2'S FIRST MOVE IS IN THE MIDDLE
 
@@ -200,7 +200,7 @@ int main(){
 	board[winCheck()-1]='X'; //Putting X to show player2 the winning combination
 	/**/displayBoard();
 			
-		
+	L5:
 	
 	return 0;
 }
