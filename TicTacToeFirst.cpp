@@ -7,6 +7,19 @@ int O1[]={0,1,7,9,3,0,3,9,7,3}; // Positions Player1 should play after Player2's
 
 int O2[][2]={0,0,0,0,9,7,0,0,9,3,7,3};// Positions Player1 should play after Player2's second move
 
+int PosCheck(int pos){
+	
+
+	if(board[pos-2]=='O'||board[pos]=='O'||board[pos+2]=='O'||board[pos-4]=='O'){
+		if(board[pos-2]!=' '&&board[pos-4]!=' '&&board[pos+2]!=' '&&board[pos+4]!=' ')
+			return 0;
+		else			return 1;
+		}
+	else
+		return 0;
+}
+	
+
 
 int check(int i, int j){
 	int sum=0,pos,space=0;
@@ -82,14 +95,20 @@ int main(){
 		
 		std::cout<<"\n\nPlayer1 has put his mark in position "<<O1[pos2]<<"\n\n";	
 		moves++;
-		
+		//std::cout<<"\nNumber of moves = "<<moves<<"\n";
 		/**/displayBoard();
 
 		L1:
 		std::cout<<"\nEnter position number where you wish to place mark(1-9)\n";
 		std::cin>>pos2;
 
-
+		
+		if(moves==3||moves==5){
+			if(PosCheck(pos2)==1){
+				std::cout<<"\nFollow rules!!!!";
+				goto L1;
+			}
+		}
 		// IF PLAYER2'S FIRST MOVE IS IN THE CENTER THEN GOTO L1
 		if(moves==1 && pos2==5){
 			
@@ -151,8 +170,8 @@ int main(){
 	L2:
 
 	
-	board[8]='X';
-	std::cout<<"\n\nPlayer1 has put his mark in position 8"<<"\n\n";	
+	board[2]='X';
+	std::cout<<"\n\nPlayer1 has put his mark in position 3"<<"\n\n";	
 	moves++;
 		
 	/**/displayBoard();
@@ -160,7 +179,18 @@ int main(){
 	L3:
 	std::cout<<"\nEnter position number where you wish to place mark3(1-9)\n";
 	std::cin>>pos2;
+	
+	if(PosCheck(pos2)==1){
+				std::cout<<"\nFollow rules!!!!";
+				goto L3;
+	}
 
+	std::cout<<"\nPlayer1 wins by putting X at position "<<winCheck()<<"\n";
+	board[winCheck()-1]='X'; //Putting X to show player2 the winning combination
+	/**/displayBoard();
+	
+
+/*
 	if( (pos2==2) || (pos2==4) || (pos2==6) || (pos2==8)){
 		
 		std::cout<<"\nFollow adjacency rule!!!!!!!!!!!\n"<<pos2<<"\n";
@@ -181,24 +211,24 @@ int main(){
 		board[6]='X';
 	else
 		board[2]='X';
+*/
+	///**/displayBoard();
 
-	/**/displayBoard();
-
-	L4:
+	/*L4:
 	std::cout<<"\nEnter position number where you wish to place mark4(1-9)\n";
-	std::cin>>pos2;
-
+	std::cin>>pos2;*/
+/*
 	if(board[pos2-1]=='X' || board[pos2-1]=='O'){
 		std::cout<<"\nThe cell is already occupied, pick another position\n";
 		goto L4;
 	}
-
-	board[pos2-1]='O';
-	/**/displayBoard();
+*/
+	//board[pos2-1]='O';
+	///**/displayBoard();
 	
-	std::cout<<"\nPlayer1 wins by putting X at position "<<winCheck()<<"\n";
-	board[winCheck()-1]='X'; //Putting X to show player2 the winning combination
-	/**/displayBoard();
+	//std::cout<<"\nPlayer1 wins by putting X at position "<<winCheck()<<"\n";
+	//board[winCheck()-1]='X'; //Putting X to show player2 the winning combination
+	///**/displayBoard();
 			
 	L5:
 	
